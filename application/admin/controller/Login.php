@@ -62,5 +62,31 @@ class Login extends Controller
             'last_login_time' => time(),
             'token' => md5($hasUser['username'] . $hasUser['password']),
         ];
+        Db::name('admin')->where('id', $hasUser['id'])->update($param);
+        writelog($hasUser['id'], session('username'), '用户【' . session('usernaem') . '】登陆成功', 1);
+        return json(['code' => 1, 'url' => url('index/index'), 'msg' => '登陆成功！']);
+    }
+    /**
+     * 验证码
+     */
+    public function checkVerify()
+    {
+        $verify = new Verify();
+        $verify->imageH = 32;
+        $verify->imageW = 100;
+        $verify->codeSet = '0123456789';
+        $verify->length = 4;
+        $verify->useNoise = false;
+        $verify->fontSize = 14;
+        return $verify->entry();
+    }
+    /**
+     * 退出登陆
+     */
+    public function loginOut()
+    {
+        session(null);
+        cache('db_config_data', null);
+        $this->redirect('login/index');
     }
 }

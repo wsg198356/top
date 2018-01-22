@@ -56,6 +56,13 @@ class MemberModel extends Model
         }
     }
     /**
+     * 获取角色信息
+     */
+    public function getOneMember($id)
+    {
+        return $this->where('id', $id)->find();
+    }
+    /**
      * 删除管理员
      */
     public function delUser($id)
