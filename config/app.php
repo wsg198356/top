@@ -49,7 +49,7 @@ return [
     'controller_suffix'      => false,
 
     // 默认模块名
-    'default_module'         => 'index',
+    'default_module'         => 'admin',
     // 禁止访问模块
     'deny_module_list'       => ['common'],
     // 默认控制器名
@@ -102,9 +102,16 @@ return [
     // 请求缓存有效期
     'request_cache_expire'   => null,
 
-    // 默认跳转页面对应的模板文件
-    'dispatch_success_tmpl'  => Env::get('think_path') . 'tpl/dispatch_jump.tpl',
-    'dispatch_error_tmpl'    => Env::get('think_path') . 'tpl/dispatch_jump.tpl',
+//    // 默认跳转页面对应的模板文件
+//    'dispatch_success_tmpl'  => Env::get('think_path') . 'tpl/dispatch_jump.tpl',
+//    'dispatch_error_tmpl'    => Env::get('think_path') . 'tpl/dispatch_jump.tpl',
+
+
+    //默认错误跳转对应的模板文件
+    'dispatch_error_tmpl' => Env::get('app_path').'admin/view/public/error.tpl',
+    //默认成功跳转对应的模板文件
+    'dispatch_success_tmpl' => Env::get('app_path').'admin/view/public/success.tpl',
+
 
     // 异常页面的模板文件
     'exception_tmpl'         => Env::get('think_path') . 'tpl/think_exception.tpl',
