@@ -10,7 +10,7 @@ class UserModel extends Model
     //根据条件获取用户信息列表
     public function getUserByWhere($map, $Nowpage, $limits)
     {
-        return $this->alias(a)->field('a.*,title')->join('think_auth_group b', 'a.group_id=b.id')->where($map)->page($Nowpage, $limits)->order('id desc')->select();
+        return $this->alias('a')->field('a.*,title')->join('think_auth_group b', 'a.groupid=b.id')->where($map)->page($Nowpage, $limits)->order('id desc')->select();
     }
     //根据条件获取所有用户数量
     public function getAllUsers($where)

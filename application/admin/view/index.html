@@ -22,7 +22,7 @@
                             <li><a href="{:url('admin/login/loginOut')}">安全退出</a></li>
                         </ul>
                     </div>
-                    <div class="logo-element">轮回
+                    <div class="logo-element">游康
                     </div>
                 </li>
                 {if !empty($menu)}
@@ -55,7 +55,7 @@
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
-                        <i class="fa fa-bars"></i> 
+                        <i class="fa fa-bars"></i>
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
@@ -184,7 +184,7 @@
         </div>
     </div>
     <!--右侧边栏结束-->
-  
+
 </div>
 {include file="public/footer" /}
 <script src="__JS__/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -207,7 +207,7 @@ $(document).ready(function(){
 //清除缓存
 $(function(){
     $("#cache").click(function(){
-        layer.confirm('你确定要清除缓存吗？', {icon: 3, title:'提示'}, function(index){                   
+        layer.confirm('你确定要清除缓存吗？', {icon: 3, title:'提示'}, function(index){
             $.getJSON("{:url('admin/index/clear')}",function(res){
                 if(res.code == 1){
                     layer.msg(res.msg,{icon:1,time:2000,shade: 0.1});
@@ -217,7 +217,7 @@ $(function(){
             });
             layer.close(index);
         })
-    });      
+    });
 });
 </script>
 </body>

@@ -15,6 +15,7 @@ class leftnav{
             }
         }
         return $arr;
+        dump($arr);
     }
 
 }

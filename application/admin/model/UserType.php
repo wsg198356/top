@@ -15,7 +15,7 @@ class UserType extends Model
      */
     public function getRoleByWhere($map, $Nowpage, $limits)
     {
-        return $this->where($map)->page($Nowpage, $limits->order('id desc')->select());
+        return $this->where($map)->page($Nowpage, $limits)->order('id desc')->select();
     }
 
     /**

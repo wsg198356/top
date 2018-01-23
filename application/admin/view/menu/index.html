@@ -18,7 +18,7 @@
             <div class="hr-line-dashed"></div>
             <div class="example-wrap">
                 <div class="example">
-                    <form id="ruleorder" name="ruleorder" method="post" action="{:url('ruleorder')}" >
+                    <form id="ruleorder" name="ruleorder" method="post" action="{:url('menu_order')}" >
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr class="long-tr">
@@ -39,11 +39,11 @@
                                         <td>{$v.name}</td>                                  
                                         <td>
                                             {if condition="$v.status eq 1"}
-                                                <a class="red" href="javascript:;" onclick="rule_state({$v.id});">
+                                                <a class="red" href="javascript:;" onclick="menu_status({$v.id});">
                                                     <div id="zt{$v.id}"><span class="label label-info">开启</span></div>
                                                 </a>
                                             {else/}
-                                                <a class="red" href="javascript:;" onclick="rule_state({$v.id});">
+                                                <a class="red" href="javascript:;" onclick="menu_status({$v.id});">
                                                     <div id="zt{$v.id}"><span class="label label-danger">禁用</span></div>
                                                 </a>
                                             {/if} 
@@ -55,9 +55,9 @@
                                             </div>
                                         </td>                                                             
                                         <td>                                   
-                                            <a href="{:url('edit_rule',['id'=>$v.id])}" class="btn btn-primary btn-outline btn-xs">
+                                            <a href="{:url('edit_menu',['id'=>$v.id])}" class="btn btn-primary btn-outline btn-xs">
                                                 <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
-                                            <a href="javascript:;" onclick="del_rule({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                            <a href="javascript:;" onclick="del_menu({$v.id})" class="btn btn-danger btn-outline btn-xs">
                                                 <i class="fa fa-trash-o"></i> 删除</a>                                       
                                         </td>
                                     </tr>
@@ -84,7 +84,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h3 class="modal-title">添加菜单</h3>                  
                 </div>
-                <form class="form-horizontal" name="add_rule" id="add_rule" method="post" action="{:url('add_rule')}">
+                <form class="form-horizontal" name="add_rule" id="add_rule" method="post" action="{:url('add_menu')}">
                     <div class="ibox-content">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">所属父级</label>
@@ -150,7 +150,7 @@
 <script type="text/javascript">
    
     $(function(){
-        $('#add_rule').ajaxForm({
+        $('#add_menu').ajaxForm({
             beforeSubmit: checkForm, 
             success: complete, 
             dataType: 'json'
@@ -209,12 +209,11 @@
     });
 
 
-/**
- * [del_rule 删除菜单]
- * @Author[田建龙 864491238@qq.com]
- * @param   {[type]}    id [用户id]
- */
-function del_rule(id){
+    /**
+     *
+     * 删除菜单
+     */
+    function del_menu(id){
     layer.confirm('确认删除此菜单?', {icon: 3, title:'提示'}, function(index){
         //do something
         $.getJSON('./del_rule', {'id' : id}, function(res){
@@ -235,8 +234,8 @@ function del_rule(id){
 }
 
 //菜单状态
-function rule_state(id){
-    lunhui.status(id,'{:url("rule_state")}');
+function menu_status(id){
+    youkang.status(id,'{:url("menu_status")}');
 }
 
     //IOS开关样式配置

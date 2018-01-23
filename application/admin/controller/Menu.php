@@ -10,11 +10,12 @@ class Menu extends Base
      */
     public function index()
     {
+
         $nav = new \org\Leftnav;
         $menu = new MenuModel();
         $admin_rule = $menu->getAllMenu();
-        $arr = $nav::rule('admin_rule');
-        $this->assign('admin_rule', $arr);
+        $arr = $nav::rule($admin_rule);
+        $this->assign('admin_rule',$arr);
         return $this->fetch();
     }
 

@@ -1,5 +1,6 @@
 <?php
 use think\Db;
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //将字符解析成数组
 function parseParams($str)
 {

@@ -1,27 +1,27 @@
 <?php
 namespace app\admin\controller;
 use think\Db;
+use think\facade\App;
 
 class Index extends Base
 {
     public function index()
     {
-        $this->fetch('/index');
+        return $this->fetch('/index');
     }
     /**
      * 管理后台首页
      */
-    public function indePage()
+    public function indexPage()
     {
         //今日新增会员
         $today = strtotime(date('Y-m-d 00:00:00'));
-        $map['create_time'] = array('egt', $today);
-        $member = Db::name('member')->where($map)->count();
+        $member = Db::name('member')->where('create_time','>=',$today)->count();
         $this->assign('member', $member);
         $info = array(
             'web_server' => $_SERVER['SERVER_SOFTWARE'],
             'onload' => ini_get('upload_max_filesize'),
-            'think_v' => THINK_VERSION,
+            'think_v' => App::version(),
             'phpversion' => phpversion()
         );
         $this->assign('info', $info);

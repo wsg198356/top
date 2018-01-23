@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="renderer" content="webkit"> 
-    <title>轮回后台登录</title>
+    <title>游康数据后台管理登录</title>
     <link href="__CSS__/bootstrap.min.css" rel="stylesheet">
     <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="__CSS__/animate.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
                 <div class="logopanel m-b">
                 </div>
                 <div class="m-b"></div>
-                <h2>欢迎使用轮回后台管理</h2>
+                <h2>欢迎使用游康数据后台管理</h2>
                 <ul class="m-b"></ul>
             </div>
         </div>
@@ -48,7 +48,7 @@
     </div>
     <div class="signup-footer">
         <div class="pull-left" style="color:#fff">
-            &copy; 2016 轮回后台管理系统 All Rights Reserved. 
+            &copy; 2018 游康数据后台管理系统 All Rights Reserved.
         </div>
     </div>
 </div>
@@ -56,7 +56,7 @@
 <script type="text/javascript" src="__JS__/bootstrap.min.js?v=3.3.6"></script>
 <script type="text/javascript" src="__JS__/jquery.form.js"></script>
 <script type="text/javascript" src="__JS__/layer/layer.js"></script>
-<script type="text/javascript" src="__JS__/lunhui.js"></script>
+<script type="text/javascript" src="__JS__/youkang.js"></script>
 <script type="text/javascript" src="__JS__/jquery.slider.min.js"></script>
 <script type="text/javascript">
     var check_result = false;
@@ -86,18 +86,18 @@
         
         function checkForm(){
             if( '' == $.trim($('#username').val())){           
-                lunhui.error('请输入登录用户名');
+                youkang.error('请输入登录用户名');
                 return false;
             }
      
             if( '' == $.trim($('#password').val())){
-                lunhui.error('请输入登录密码');
+                youkang.error('请输入登录密码');
                 return false;
             }
 
             if ({$verify_type} == 0) {
                 if( false == check_result){
-                    lunhui.error('请拖动滑块到最右边');
+                    youkang.error('请拖动滑块到最右边');
                     return false;
                 }
             }         
@@ -107,9 +107,9 @@
 
         function complete(data){
             if(data.code==1){
-                lunhui.success(data.msg,data.url);
+                youkang.success(data.msg,data.url);
             }else{ 
-                lunhui.error(data.msg);
+                youkang.error(data.msg);
                 $('button').removeClass('disabled').text('登　录');   
                 return false;   
             }

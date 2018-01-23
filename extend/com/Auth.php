@@ -85,8 +85,6 @@ class Auth{
 
     /**
      * 根据用户id获取用户组,返回值为数组
-     * @param  uid int     用户id
-     * @return array       用户所属的用户组 array(
      *     array('uid'=>'用户id','group_id'=>'用户组id','title'=>'用户组名称','rules'=>'用户组拥有的规则id,多个,号隔开'),
      *     ...)   
      */
