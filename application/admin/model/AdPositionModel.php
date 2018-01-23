@@ -20,7 +20,7 @@ class AdPositionModel extends Model
     public function insertAdPoition($param)
     {
         try {
-            $res = $this->validate('AdPositionValidate')->allowField(true)->save($param);
+            $res = $this->allowField(true)->save($param);
             if (false !== $res) {
                 return ['code' => 1, 'data' => '', 'msg' => '添加广告位成功'];
             } else {
@@ -36,7 +36,7 @@ class AdPositionModel extends Model
     public function editAdPosition($param)
     {
         try {
-            $res = $this->validate('AdPositionValidata')->allowField(true)->save($param, ['id' => $param['id']]);
+            $res = $this->validate('AdPositionValidate')->allowField(true)->save($param, ['id' => $param['id']]);
             if (false !== $res) {
                 return ['code' => 1, 'data' => '', 'msg' => '编辑广告位成功'];
             } else {

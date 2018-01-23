@@ -9,7 +9,7 @@ class Log extends Base
     /**
      * 操作日志
      */
-    public function oprate_log()
+    public function operate_log()
     {
         $key = input('key');
         $map = [];

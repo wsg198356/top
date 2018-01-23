@@ -136,14 +136,15 @@ function Qrcode($taoken, $url, $size = 8)
  */
 function delete_dir_file($dir_name) {
     $result = false;
+    $ds=DIRECTORY_SEPARATOR;
     if(is_dir($dir_name)){
         if ($handle = opendir($dir_name)) {
             while (false !== ($item = readdir($handle))) {
                 if ($item != '.' && $item != '..') {
-                    if (is_dir($dir_name . DS . $item)) {
-                        delete_dir_file($dir_name . DS . $item);
+                    if (is_dir($dir_name . $ds . $item)) {
+                        delete_dir_file($dir_name . $ds . $item);
                     } else {
-                        unlink($dir_name . DS . $item);
+                        unlink($dir_name . $ds . $item);
                     }
                 }
             }

@@ -37,7 +37,7 @@
                             {notempty name="data"}
                                 {volist name="data" id="vo"}
                                     <tr class="long-td">
-                                        <td>{$vo.time|date='Ymd-His',###}</td>
+                                        <td>{$vo.time|date='Ymd-His'}</td>
                                         <td>{$vo.part}</td>
                                         <td>{$vo.compress}</td>
                                         <td>{$vo.size|format_bytes}</td>

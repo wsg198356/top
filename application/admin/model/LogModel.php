@@ -5,6 +5,7 @@ use think\Model;
 
 class LogModel extends Model
 {
+    protected $name = 'log';
     /**
      * 删除日志
      */

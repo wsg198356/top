@@ -18,7 +18,6 @@ class Base extends Controller
         $controller = strtolower(request()->controller());
         $action     = strtolower(request()->action());
         $url        = $module."/".$controller."/".$action;
-
         //跳过检测以及主页权限
         if(session('uid')!=1){
             if(!in_array($url, ['admin/index/index','admin/index/indexpage','admin/upload/upload','admin/index/uploadface'])){
@@ -27,17 +26,15 @@ class Base extends Controller
                 }
             }
         }
-
         $node = new Node();
+        $config = cache('db_config_data');
         $this->assign([
             'username' => session('username'),
             'portrait' => session('portrait'),
             'rolename' => session('rolename'),
-            'menu' => $node->getMenu(session('rule'))
+            'menu' => $node->getMenu(session('rule')),
+            'site_name'=>$config['web_site_title']
         ]);
-
-        $config = cache('db_config_data');
-
         if(!$config){
             $config = load_config();
             cache('db_config_data',$config);

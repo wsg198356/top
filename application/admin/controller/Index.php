@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use think\Db;
 use think\facade\App;
+use think\facade\Env;
 
 class Index extends Base
 {
@@ -52,7 +53,9 @@ class Index extends Base
      */
     public function clear()
     {
-        if (delete_dir_file(CACHE_PATH) && delete_dir_file(TEMP_PATH)) {
+        $cache_path = Env::get('runtime_path') . 'cache/';
+        $temp_path = Env::get('runtime_path') . 'temp/';
+        if (delete_dir_file($cache_path) && delete_dir_file($temp_path)) {
             return json(['code' => 1, 'msg' => '清除缓存成功']);
         } else {
             return json(['code' => 0, 'msg' => '清除缓存失败']);

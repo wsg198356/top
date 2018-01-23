@@ -1,8 +1,8 @@
 <?php
 namespace app\admin\controller;
-use think\Config;
+use \think\facade\Config;
 use think\Db;
-use think\Session;
+use think\facade\Session;
 use com\Database;
 
 class Data extends Base
@@ -23,10 +23,8 @@ class Data extends Base
      * 备份数据库
      */
     public function export($ids = null, $id = null, $start = null) {
-//        if (request()->isPost() && !empty($ids) && is_array($ids)) { //初始化
-        dump(Config::get('data_backup_path'));
         if (request()->isPost() && !empty($ids) && is_array($ids)) {
-                $path = Config::get('data_backup_path');
+            $path = Config::get('data_backup_path');
             is_dir($path) || mkdir($path, 0755, true);
             //读取备份配置
             $config = [
@@ -45,7 +43,6 @@ class Data extends Base
             //检查备份目录是否可写
             is_writeable($config['path']) || $this->error('备份目录不存在或不可写，请检查后重试！');
             Session::set('backup_config', $config);
-
             //生成备份文件信息
             $file = [
                 'name' => date('Ymd-His', request()->time()),
@@ -54,9 +51,8 @@ class Data extends Base
             Session::set('backup_file', $file);
             //缓存要备份的表
             Session::set('backup_tables', $ids);
-
             //创建备份文件
-            $Database = new \com\Database($file, $config);
+            $Database = new Database($file, $config);
             if (false !== $Database->create()) {
                 $tab = ['id' => 0, 'start' => 0];
                 return $this->success('初始化成功！', '', ['tables' => $ids, 'tab' => $tab]);
@@ -66,7 +62,7 @@ class Data extends Base
         } elseif (request()->isGet() && is_numeric($id) && is_numeric($start)) { //备份数据
             $tables = Session::get('backup_tables');
             //备份指定表
-            $Database = new \com\Database(Session::get('backup_file'), Session::get('backup_config'));
+            $Database = new Database(Session::get('backup_file'), Session::get('backup_config'));
             $start = $Database->backup($tables[(int) $id], $start);
             if (false === $start) { //出错
                 $this->error('备份出错！');
@@ -232,7 +228,7 @@ class Data extends Base
             }
         } elseif (is_numeric($part) && is_numeric($start)) {
             $list = Session::get('backup_list');
-            $db = new \com\Database($list[$part], [
+            $db = new Database($list[$part], [
                     'path' => realpath(Config::get('data_backup_path')) . DIRECTORY_SEPARATOR,
                     'compress' => $list[$part][2]
                 ]

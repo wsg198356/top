@@ -38,11 +38,11 @@
                                     <td>{$vo.orderby}</td>                                                              
                                     <td>
                                         {if condition="$vo['status'] == 1"}
-                                            <a href="javascript:;" onclick="position_state({$vo.id});">
+                                            <a href="javascript:;" onclick="position_status({$vo.id});">
                                                 <div id="zt{$vo.id}"><span class="label label-info">开启</span></div>
                                             </a>
                                         {else/}    
-                                            <a href="javascript:;" onclick="position_state({$vo.id});">
+                                            <a href="javascript:;" onclick="position_status({$vo.id});">
                                                 <div id="zt{$vo.id}"><span class="label label-danger">禁用</span></div>
                                             </a>
                                         {/if}   
@@ -68,7 +68,6 @@
 </div>
 {include file="public/footer" /}
 
-
 <script type="text/javascript">
 
     //分页
@@ -91,8 +90,7 @@
 
 
 /**
- * [del_position 删除广告位]
- * @Author[田建龙 864491238@qq.com]
+ *  删除广告位
  */
 function del_position(id){
     layer.confirm('确认删除此广告位?', {icon: 3, title:'提示'}, function(index){
@@ -100,7 +98,7 @@ function del_position(id){
         $.getJSON('./del_position', {'id' : id}, function(res){
             if(res.code == 1){
                 layer.msg(res.msg,{icon:1,time:1500,shade: 0.1},function(){
-                    window.location.href="{:url('ad/index_position')}";
+                    window.location.href="{:url('position/index')}";
                 });               
             }else{
                 layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
@@ -113,11 +111,10 @@ function del_position(id){
 }
 
 /**
- * [position_state 广告位状态]
- * @Author[田建龙 864491238@qq.com]
+ * 广告位状态
  */
-function position_state(val){
-    $.post('{:url("position_state")}',
+function position_status(val){
+    $.post('{:url("position_status")}',
     {id:val},
     function(data){
          

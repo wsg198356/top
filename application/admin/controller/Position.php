@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 use app\admin\model\AdPositionModel;
+use app\admin\validate\AdPositionValidate;
 use think\Db;
 
 class Position extends Base
@@ -10,7 +11,7 @@ class Position extends Base
      * [index_position  获取广告位列表]
      * @autor [王生功][1064860088@qq.com]
      */
-    public function index_position()
+    public function index()
     {
         $ad = new AdPositionModel();
         $nowpage = input('get.page');
@@ -32,9 +33,16 @@ class Position extends Base
     {
         if (request()->isAjax()) {
             $param = input('post.');
-            $ad = new AdPositionModel();
-            $flag = $ad->insertAdPoition($param);
-            return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            $v = new AdPositionValidate();
+            $res = $v->check($param);
+            if (!$res){
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }else{
+                $ad = new AdPositionModel();
+                $flag = $ad->insertAdPoition($param);
+                return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            }
+
         }
         return $this->fetch();
     }
