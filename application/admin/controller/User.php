@@ -14,7 +14,9 @@ class User extends Base
         $key = input('key');
         $map = [];
         if ($key && $key !== '') {
-            $map['username'] = ['like', "%" . $key . "%"];
+            $map = [
+                ['username','like', "%" . $key . "%"]
+            ];
         }
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = config('list_rows');

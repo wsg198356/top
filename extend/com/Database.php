@@ -2,7 +2,7 @@
 
 namespace com;
 use think\Db;
-use think\Config;
+use think\facade\Config;
 use think\Session;
 
 //数据导出模型

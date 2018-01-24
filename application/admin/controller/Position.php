@@ -13,12 +13,19 @@ class Position extends Base
      */
     public function index()
     {
+        $key = input('key');
+        $map = [];
+        if ($key && $key !== '') {
+            $map = [
+                ['name', 'like', "%" . $key . "%"],
+            ];
+        }
         $ad = new AdPositionModel();
-        $nowpage = input('get.page');
+        $nowpage = input('get.page')?input('get.page'):1;
         $limits = 10;
         $count = Db::name('ad_position')->count();
         $allpage = intval(ceil($count / $limits));
-        $list = $ad->getAll($nowpage, $limits);
+        $list = $ad->getAll($map,$nowpage, $limits);
         $this->assign([
             'nowpage' => $nowpage,
             'allpage' => $allpage,
@@ -33,6 +40,7 @@ class Position extends Base
     {
         if (request()->isAjax()) {
             $param = input('post.');
+            //数据验证
             $v = new AdPositionValidate();
             $res = $v->check($param);
             if (!$res){
@@ -42,7 +50,6 @@ class Position extends Base
                 $flag = $ad->insertAdPoition($param);
                 return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
             }
-
         }
         return $this->fetch();
     }
@@ -54,8 +61,15 @@ class Position extends Base
         $ad = new AdPositionModel();
         if (request()->isAjax()) {
             $param = input('post.');
-            $flag = $ad->editAdPosition($param);
-            return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            //数据验证
+            $v = new AdPositionValidate();
+            $res = $v->check($param);
+            if (!$res) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            } else {
+                $flag = $ad->editAdPosition($param);
+                return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            }
         }
         $id = input('param.id');
         $this->assign('ad', $ad->getOne($id));

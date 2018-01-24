@@ -5,7 +5,7 @@ use think\Model;
 
 class ArticleModel extends Model
 {
-    protected $name = 'artcle';
+    protected $name = 'article';
     protected $autoWriteTimestamp = true;
     /**
      * 根据条件获取文章列表

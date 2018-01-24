@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use app\admin\model\AdModel;
 use app\admin\model\AdPositionModel;
+use app\admin\validate\AdVlidate;
 use think\Db;
 
 class Ad extends Base
@@ -15,7 +16,9 @@ class Ad extends Base
         $map = [];
         $map['closed'] = 0;
         if ($key && $key !== '') {
-            $map['title'] = ['like', '%' . $key . '%'];
+            $map = [
+                ['title','like', '%' . $key . '%']
+            ];
         }
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = config('list_rows');
@@ -40,6 +43,11 @@ class Ad extends Base
     {
         if (request()->isAjax()) {
             $param = input('post.');
+            //数据验证
+            $v = new AdVlidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $param['closed'] = 0;
             $ad = new AdModel();
             $flag = $ad->insertAd($param);
@@ -57,11 +65,20 @@ class Ad extends Base
         $ad = new AdModel();
         if (request()->isPost()) {
             $param = input('post.');
+            //数据验证
+            $v = new AdVlidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $flag = $ad->editAd($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
         $id = input('param.id');
-        $this->assign('ad', $ad->getOneAd($id));
+        $position = new AdPositionModel();
+        $this->assign([
+            'ad' => $ad->getOneAd($id),
+            'position' => $position->getAllPosition(),
+        ]);
         return $this->fetch();
     }
     /**

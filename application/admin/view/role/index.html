@@ -51,11 +51,11 @@
                                     <td>
                                         {{# if(d[i].id!==1){ }}
                                             {{# if(d[i].status==1){ }}
-                                                <a href="javascript:;" onclick="role_state({{d[i].id}});">
+                                                <a href="javascript:;" onclick="role_status({{d[i].id}});">
                                                     <div id="zt{{d[i].id}}"><span class="label label-info">开启</span></div>
                                                 </a>
                                             {{# }else{ }}
-                                                <a href="javascript:;" onclick="role_state({{d[i].id}});">
+                                                <a href="javascript:;" onclick="role_status({{d[i].id}});">
                                                     <div id="zt{{d[i].id}}"><span class="label label-danger">禁用</span></div>
                                                 </a>
                                             {{# } }}
@@ -119,9 +119,7 @@
 <script type="text/javascript" src="/static/admin/js/plugins/zTree/jquery.ztree.core-3.5.js"></script>
 <script type="text/javascript" src="/static/admin/js/plugins/zTree/jquery.ztree.excheck-3.5.js"></script>
 <script type="text/javascript" src="/static/admin/js/plugins/zTree/jquery.ztree.exedit-3.5.js"></script>
-
 <script type="text/javascript">
-   
     //laypage分页
     Ajaxpage();
     function Ajaxpage(curr){
@@ -160,17 +158,15 @@
     function roleEdit(id){
         location.href = './roleEdit/id/'+id+'.html';
     }
-
     //删除角色
     function roleDel(id){
-        lunhui.confirm(id,'{:url('roleDel')}');
+        youkang.confirm(id,'{:url('roleDel')}');
     }
 
     //角色状态
-    function role_state(id){
-        lunhui.status(id,'{:url("role_state")}');
+    function role_status(id){
+        youkang.status(id,'{:url("role_status")}');
     }
-
     zNodes = '';
     var index = '';
     var index2 = '';
@@ -184,7 +180,6 @@
             layer.close(index2);
             if(res.code == 1){
                 zNodes = JSON.parse(res.data);  //将字符串转换成obj
-
                 //页面层
                 index = layer.open({
                     type: 1,
@@ -193,7 +188,6 @@
                     skin: 'layui-layer-demo', //加上边框
                     content: $('#role')
                 });
-
                 //设置zetree
                 var setting = {
                     check:{
@@ -205,7 +199,6 @@
                         }
                     }
                 };
-
                 $.fn.zTree.init($("#treeType"), setting, zNodes);
                 var zTree = $.fn.zTree.getZTreeObj("treeType");
                 zTree.expandAll(true);
@@ -216,7 +209,6 @@
 
         });
     }
-
     //确认分配权限
     $("#postform").click(function(){
         var zTree = $.fn.zTree.getZTreeObj("treeType");
@@ -245,11 +237,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-

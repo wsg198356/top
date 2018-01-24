@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use app\admin\model\Node;
 use app\admin\model\UserType;
+use app\admin\validate\CateValidate;
 use think\Db;
 
 class Role extends Base
@@ -14,7 +15,9 @@ class Role extends Base
         $key = input('key');
         $map = [];
         if ($key && $key !== '') {
-            $map['title'] = ['like', "%" . $key . "%"];
+            $map = [
+                ['title','like', "%" . $key . "%"]
+            ];
         }
         $user = new UserType();
         $Nowpage = input('get.page') ? input('get.page') : 1;
@@ -39,6 +42,11 @@ class Role extends Base
     {
         if (request()->isAjax()) {
             $param = input('post.');
+            //提交验证
+            $v = new CateValidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $role = new UserType();
             $flag = $role->insertRole($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
@@ -53,6 +61,11 @@ class Role extends Base
         $role = new UserType();
         if (request()->isAjax()) {
             $param = input('post.');
+            //验证
+            $v = new CateValidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $flag = $role->editRole($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
@@ -78,7 +91,7 @@ class Role extends Base
     public function role_status()
     {
         $id = input('param.id');
-        $status = Db::name('suth_group')->where('id', $id)->value('status');
+        $status = Db::name('auth_group')->where('id', $id)->value('status');
         if ($status == 1) {
             $flag = Db::name('auth_group')->where('id', $id)->setField(['status' => 0]);
             return json(['code' => 1, 'data' => $flag['data'], 'msg' => '已禁止']);

@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 use app\admin\model\ArticleCateModel;
+use app\admin\validate\CateValidate;
 use think\Db;
 
 class Cate extends Base
@@ -8,7 +9,7 @@ class Cate extends Base
     /**
      * 分类管理
      */
-    public function index_cate()
+    public function index()
     {
         $cate = new ArticleCateModel();
         $list = $cate->getAllCate();
@@ -22,6 +23,10 @@ class Cate extends Base
     {
         if (request()->isAjax()) {
             $param = input('post.');
+            $v = new CateValidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $cate = new ArticleCateModel();
             $flag = $cate->insertCate($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);

@@ -10,9 +10,9 @@ class AdPositionModel extends Model
     /**
      * 获取所有广告位置
      */
-    public function getAll($nowpage, $limits)
+    public function getAll($map,$nowpage, $limits)
     {
-        return $this->page($nowpage, $limits)->order('id asc')->select();
+        return $this->where($map)->page($nowpage, $limits)->order('id asc')->select();
     }
     /**
      * 增加广告位置
@@ -36,7 +36,7 @@ class AdPositionModel extends Model
     public function editAdPosition($param)
     {
         try {
-            $res = $this->validate('AdPositionValidate')->allowField(true)->save($param, ['id' => $param['id']]);
+            $res = $this->allowField(true)->save($param, ['id' => $param['id']]);
             if (false !== $res) {
                 return ['code' => 1, 'data' => '', 'msg' => '编辑广告位成功'];
             } else {

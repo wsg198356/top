@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use app\admin\model\ArticleCateModel;
 use app\admin\model\ArticleModel;
+use app\admin\validate\ArticleValidate;
 use think\Db;
 
 class Article extends Base
@@ -14,7 +15,9 @@ class Article extends Base
         $key = input('key');
         $map = [];
         if ($key && $key !== '') {
-            $map['title'] = ['like', "%" . $key . "%"];
+            $map = [
+                ['title','like', "%" . $key . "%"]
+            ];
         }
         $Nowpage = input('get.page') ? input('get.page') : 1;
         $limits = config('list_rows');
@@ -40,9 +43,15 @@ class Article extends Base
     {
         if (request()->isAjax()) {
             $param = input('post.');
-            $article = new ArticleModel();
-            $flag = $article->insertArticle($param);
-            return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+            //验证
+            $v = new ArticleValidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
+
+             $article = new ArticleModel();
+             $flag = $article->insertArticle($param);
+             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }
         $cate = new ArticleCateModel();
         $this->assign('cate', $cate->getAllCate());
@@ -56,6 +65,11 @@ class Article extends Base
         $article = new ArticleModel();
         if (request()->isAjax()) {
             $param = input('post.');
+            //验证数据
+            $v = new ArticleValidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $flag = $article->editArticle($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }

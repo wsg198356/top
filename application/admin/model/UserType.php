@@ -34,7 +34,7 @@ class UserType extends Model
     public function insertRole($param)
     {
         try {
-            $result = $this->validate('RoleValidate')->save($param);
+            $result = $this->save($param);
             if (false !== $result) {
                 return ['code' => '1', 'data' => '', 'msg' => '添加角色成功'];
             } else {
@@ -54,7 +54,7 @@ class UserType extends Model
     public function editRole($param)
     {
         try {
-            $result = $this->validate('RoleValidate')->save($param, ['id' => $param['id']]);
+            $result = $this->save($param, ['id' => $param['id']]);
             if (false !== $result) {
                 return ['code' => 1, 'data' => '', 'msg' => '编辑角色成功'];
             } else {

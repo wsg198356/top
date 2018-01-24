@@ -14,7 +14,9 @@ class Member extends Base
         $key = input('key');
         $map = [];
         if ($key && $key != '') {
-            $map['group_name'] = ['like', "%" . $key . "%"];
+            $map = [
+                ['group_name','like', "%" . $key . "%"]
+            ];
         }
         $group = new MemberGroupModel();
         $Nowpage = input('get.page') ? input('get.page') : 1;
@@ -93,7 +95,9 @@ class Member extends Base
         $key = input('key');
         $map['closed'] = 0;
         if ($key && $key != '') {
-            $map['account|nickname|mobile'] = ['like', "%" . $key . "%"];
+            $map =[
+                ['account|nickname|mobile','like', "%" . $key . "%"]
+            ];
         }
         $member = new MemberModel();
         $Nowpage = input('get.page') ? input('get.page') : 1;
