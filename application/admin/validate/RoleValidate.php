@@ -5,6 +5,6 @@ use think\Validate;
 class RoleValidate extends Validate
 {
     protected $rule = [
-        ['title','unique:auth_auth_group','角色已经存在']
+        'title|角色名称'=>'unique:auth_auth_group'
     ];
 }

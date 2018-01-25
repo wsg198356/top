@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <title>{$site_name}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="{!keywords}"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Muli:300,400" rel="stylesheet">
+    <!-- /fonts -->
+    <!-- css -->
+    <link href="__CSS__/bootstrap.css" rel="stylesheet" type='text/css' media="all"/>
+    <link href="__CSS__/style.css" rel="stylesheet" type='text/css' media="all"/>
+    <link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+    <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__CSS__/animate.min.css" rel="stylesheet">
+    <link href="__CSS__/style.min.css" rel="stylesheet">
+    <link href="__CSS__/login.min.css" rel="stylesheet">
+    <link href="__CSS__/jquery.slider.css" rel="stylesheet">
+    <script type="text/javascript" src="__JS__/jquery.min.js?v=2.1.4"></script>
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location
+        }
+        ;
+    </script>
+    <!-- /css -->
+</head>
+<body>
+<h1 class="w3ls">{$site_name}用户注册</h1>
+<div class="content-agileits">
+    <form id="Register" name="Register" action="{:url('login/register')}" method="post" data-toggle="validator"
+          role="form">
+        <div class="form-group w3 w3l">
+            <label for="account" class="control-label">用 户 名</label>
+            <input type="text" name="account" class="form-control" id="account" placeholder="用户名" data-error="输入你的用户名" required>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group agileits  w3">
+            <label for="nickname" class="control-label">昵 称</label>
+            <input type="text" name="nickname" class="form-control" id="nickname" placeholder="昵  称" data-error="请输入昵称" required>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group w3l agileinfo wthree w3-agileits">
+            <label for="inputEmail" class="control-label">邮箱</label>
+            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email"
+                   data-error="邮箱格式不对" required>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group agileinfo wthree w3-agileits agile">
+            <label for="Phone" class="control-label">手机</label>
+            <input type="text" name="mobile" class="form-control" id="Phone" placeholder="手机号码" data-error="输入手机号码！"
+                   required>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group agile agileits w3-agile">
+            <label for="inputPassword" class="control-label">密码</label>
+            <div class="form-inline row">
+                <div class="form-group col-sm-6 agileits">
+                    <input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword"
+                           placeholder="密码" required>
+                    <div class="help-block">密码不能少于六位！</div>
+                </div>
+                <div class="form-group col-sm-6 w3-agile">
+                    <input type="password" name="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword"
+                           data-match-error="请重复密码" placeholder="重复密码" data-error="重复密码" required>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-lg">注册</button>
+        </div>
+    </form>
+</div>
+<p class="copyright-w3ls">{$site_copy}</p>
+<!-- js files -->
+<script type="text/javascript" src="__JS__/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="__JS__/validator.min.js"></script>
+<script type="text/javascript" src="__JS__/bootstrap.min.js?v=3.3.6"></script>
+<script type="text/javascript" src="__JS__/jquery.form.js"></script>
+<script type="text/javascript" src="__JS__/layer/layer.js"></script>
+<script type="text/javascript" src="__JS__/youkang.js"></script>
+<script type="text/javascript" src="__JS__/jquery.slider.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#Register').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm() {
+            if ('' == $.trim($('#account').val())) {
+                youkang.error('请输入登录用户名');
+                return false;
+            }
+            if ('' == $.trim($('#nickname').val())) {
+                youkang.error('昵称不能为空');
+                return false;
+            }
+            if ('' == $.trim($('#inputEmail').val())) {
+                youkang.error('邮箱不能为空');
+                return false;
+            }
+            if ('' == $.trim($('#Phone').val())) {
+                youkang.error('手机不能为空');
+            }
+            if ('' == $.trim($('#inputPassword').val())) {
+                youkang.error('请输入密码');
+                return false;
+            }
+            if ('' == $.trim($('#inputPasswordConfirm').val())) {
+                youkang.error('请输入重复密码');
+                return false;
+            }
+            $('button').addClass('disabled').text('注册中...');
+        }
+
+        function complete(data) {
+            if (data.code == 1) {
+                youkang.success(data.msg, data.url);
+            } else {
+                youkang.error(data.msg);
+                $('button').removeClass('disabled').text('注册');
+                return false;
+            }
+        }
+    });
+
+</script>
+<!-- /js files -->
+</body>
+</html>

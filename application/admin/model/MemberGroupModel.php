@@ -34,7 +34,7 @@ class MemberGroupModel extends Model
     public function insertGroup($param)
     {
         try {
-            $res = $this->validate('MemberGroupValidate')->save($param);
+            $res = $this->allowField(true)->save($param);
             if (false !== $res) {
                 return ['code' => 1, 'data' => '', 'msg' => '用户组添加成功'];
             } else {
@@ -50,7 +50,7 @@ class MemberGroupModel extends Model
     public function editGroup($param)
     {
         try {
-            $res = $this->validate('MemberGroupValidate')->save($param, ['id' => $param['id']]);
+            $res = $this->allowField(true)->save($param, ['id' => $param['id']]);
             if (false !== $res) {
                 return ['code' => 1, 'data' => '', 'msg' => '用户组编辑成功'];
             } else {

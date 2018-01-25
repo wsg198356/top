@@ -5,6 +5,6 @@ use think\Validate;
 class MemberGroupValidate extends Validate
 {
     protected $rule = [
-        ['group_name','unique:member_group','会员组已经存在']
+        'group_name|会员组' => 'require|unique:member_group'
     ];
 }

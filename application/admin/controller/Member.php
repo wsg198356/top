@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use app\admin\model\MemberGroupModel;
 use app\admin\model\MemberModel;
+use app\admin\validate\MemberGroupValidate;
 use think\Db;
 
 class Member extends Base
@@ -41,6 +42,10 @@ class Member extends Base
     {
         if (request()->isAjax()) {
             $param = input('post.');
+            $v = new MemberGroupValidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $group = new MemberGroupModel();
             $flag = $group->insertGroup($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
@@ -55,6 +60,10 @@ class Member extends Base
         $group = new MemberGroupModel();
         if (request()->isPost()) {
             $param = input('post.');
+            $v = new MemberGroupValidate();
+            if (!$v->check($param)) {
+                return json(['code' => -1, 'data' => '', 'msg' => $v->getError()]);
+            }
             $flag = $group->editGroup($param);
             return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
         }

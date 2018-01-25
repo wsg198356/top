@@ -7,7 +7,7 @@ use think\Model;
 class UserType extends Model
 {
     protected $name = 'auth_group';
-    protected $autoWriteTimetamp = true;
+    protected $autoWriteTimestamp = true;
 
     /**
      * [getRoleByWhere   根据条件获取角色名称]
