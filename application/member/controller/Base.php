@@ -4,27 +4,25 @@ namespace app\member\controller;
 
 use think\Controller;
 
-class Base extends Controller
-{
+class Base extends Controller {
 
-    public function initialize()
-    {
-        if ( ! session('uid') || ! session('username')) {
+    public function initialize() {
+        if (!session('id') || !session('account')) {
             $this -> redirect('login/index');
         }
-        if (session('uid') != '') {
+        if (session('id') != '') {
             $this -> error('你还没有登录');
         }
         $config = cache('db_config_data');
         $this -> assign(
-          [
-            'username'  => session('username'),
-            'portrait'  => session('portrait'),
-            'rolename'  => session('rolename'),
-            'site_name' => $config['web_site_title'],
-          ]
+            [
+                'account'   => session('account'),
+                'head_img'  => session('head_img'),
+                'nickname'  => session('nickname'),
+                'site_name' => $config['web_site_title'],
+            ]
         );
-        if ( ! $config) {
+        if (!$config) {
             $config = load_config();
             cache('db_config_data', $config);
         }
@@ -34,7 +32,7 @@ class Base extends Controller
         }
         if (config('admin_allow_id')) {
             if (in_array(
-              request() -> ip(), explode('#', config('admin_allow_id'))
+                request() -> ip(), explode('#', config('admin_allow_id'))
             )
             ) {
                 $this -> error('禁止访问');
