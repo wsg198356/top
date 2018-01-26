@@ -37,7 +37,9 @@
                             {if !empty($vo['child'])}
                                 {foreach name="$vo['child']" item="v"}
                                 <li>
-                                    <a class="J_menuItem" href="{$v.href}">{$v.title}</a>
+                                    <a class="J_menuItem" href="{$v.href}">
+                                     {$v.title}
+                                    </a>
                                 </li>
                                 {/foreach}
                             {/if}
@@ -175,6 +177,13 @@
                             <span class="skin-name ">
                                 <a href="#" class="s-skin-3">
                                     黄色/紫色主题
+                                </a>
+                            </span>
+                        </div>
+                        <div class="setings-item black-skin nb">
+                            <span class="skin-name ">
+                                <a href="#" class="s-skin-4">
+                                    黑色主题
                                 </a>
                             </span>
                         </div>
